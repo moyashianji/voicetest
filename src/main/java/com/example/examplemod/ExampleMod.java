@@ -1,7 +1,6 @@
 package com.example.examplemod;
 
 import com.example.examplemod.test.ClientCommandHandler;
-import com.example.examplemod.test.ClientEventHandler;
 import com.example.examplemod.test.NetworkHandler;
 import com.mojang.logging.LogUtils;
 import net.minecraft.client.Minecraft;
@@ -86,7 +85,7 @@ public class ExampleMod
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::onClientSetup);
 
         // Register our mod's ForgeConfigSpec so that Forge can create and load the config file for us
-        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, Config.SPEC);
+        //ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, Config.SPEC);
     }
 
     private void commonSetup(final FMLCommonSetupEvent event)
@@ -96,13 +95,7 @@ public class ExampleMod
         //event.enqueueWork(NetworkHandler::register); // ネットワークメッセージの登録
         NetworkHandler.register();
 
-        if (Config.logDirtBlock)
-            LOGGER.info("DIRT BLOCK >> {}", ForgeRegistries.BLOCKS.getKey(Blocks.DIRT));
-
-        LOGGER.info(Config.magicNumberIntroduction + Config.magicNumber);
-
-        Config.items.forEach((item) -> LOGGER.info("ITEM >> {}", item.toString()));
-    }
+   }
     private void onClientSetup(FMLClientSetupEvent event) {
 
     }

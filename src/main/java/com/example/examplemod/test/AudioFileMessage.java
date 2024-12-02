@@ -37,7 +37,7 @@ public class AudioFileMessage {
     public static void handle(AudioFileMessage message, Supplier<NetworkEvent.Context> contextSupplier) {
         NetworkEvent.Context context = contextSupplier.get();
         context.enqueueWork(() -> {
-            CustomSoundPlayer.handleAudioPart(message.audioData);
+           // CustomSoundPlayer.handleAudioPart(message.audioData);
         });
         context.setPacketHandled(true);
     }

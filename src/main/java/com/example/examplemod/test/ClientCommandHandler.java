@@ -67,10 +67,8 @@ public class ClientCommandHandler {
                                                             new AudioFileChunkMessage(chunkData, chunkIndex, totalChunks, playerUUID)
                                                     );
                                                     System.out.println("Sent chunk " + chunkIndex + " of " + totalChunks);
-                                                }, chunkIndex * 10, TimeUnit.MILLISECONDS); // 10ミリ秒ごとに送信
+                                                }, chunkIndex * 2, TimeUnit.MILLISECONDS); // 10ミリ秒ごとに送信
                                             }
-
-
 
                                         } catch (Exception e) {
                                             context.getSource().sendFailure(
@@ -85,7 +83,9 @@ public class ClientCommandHandler {
                                     }
 
                                     return 1;
-                                }))
+                                }
+                                )
+                        )
         );
     }
     @SubscribeEvent

@@ -2,6 +2,7 @@ package com.example.examplemod.test;
 
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.network.NetworkEvent;
+import net.minecraftforge.network.PacketDistributor;
 
 import java.util.UUID;
 import java.util.function.Supplier;
@@ -39,9 +40,13 @@ public class AudioFileChunkMessage {
     public static void handle(AudioFileChunkMessage message, Supplier<NetworkEvent.Context> contextSupplier) {
         NetworkEvent.Context context = contextSupplier.get();
         context.enqueueWork(() -> {
-            System.out.println("7a");
-            // サーバー側で受信データを処理
-            ServerEventHandler.handleChunkAndSend(message);
+            if (context.getDirection().getReceptionSide().isServer()) {
+                // サーバー側：全クライアントに再送信
+                NetworkHandler.CHANNEL.send(PacketDistributor.ALL.noArg(), message);
+            } else {
+                // クライアント側：チャンクを結合処理
+                ClientAudioHandler.handleChunk(message);
+            }
         });
         context.setPacketHandled(true);
     }
